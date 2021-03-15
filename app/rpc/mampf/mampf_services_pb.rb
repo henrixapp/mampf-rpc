@@ -14,7 +14,7 @@ module Mampf
       self.unmarshal_class_method = :decode
       self.service_name = 'mampf.MaMpfLectureService'
 
-      rpc :GetLecturesForUser, ::Mampf::LecturesByUserRequest, ::Mampf::LecturesQueryResult
+      rpc :GetLecturesForUser, ::Mampf::LecturesByUserAndTermRequest, ::Mampf::LecturesQueryResult
     end
 
     Stub = Service.rpc_stub_class

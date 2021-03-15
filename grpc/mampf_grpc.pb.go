@@ -18,7 +18,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type MaMpfLectureServiceClient interface {
-	GetLecturesForUser(ctx context.Context, in *LecturesByUserRequest, opts ...grpc.CallOption) (*LecturesQueryResult, error)
+	GetLecturesForUser(ctx context.Context, in *LecturesByUserAndTermRequest, opts ...grpc.CallOption) (*LecturesQueryResult, error)
 }
 
 type maMpfLectureServiceClient struct {
@@ -29,7 +29,7 @@ func NewMaMpfLectureServiceClient(cc grpc.ClientConnInterface) MaMpfLectureServi
 	return &maMpfLectureServiceClient{cc}
 }
 
-func (c *maMpfLectureServiceClient) GetLecturesForUser(ctx context.Context, in *LecturesByUserRequest, opts ...grpc.CallOption) (*LecturesQueryResult, error) {
+func (c *maMpfLectureServiceClient) GetLecturesForUser(ctx context.Context, in *LecturesByUserAndTermRequest, opts ...grpc.CallOption) (*LecturesQueryResult, error) {
 	out := new(LecturesQueryResult)
 	err := c.cc.Invoke(ctx, "/mampf.MaMpfLectureService/GetLecturesForUser", in, out, opts...)
 	if err != nil {
@@ -42,7 +42,7 @@ func (c *maMpfLectureServiceClient) GetLecturesForUser(ctx context.Context, in *
 // All implementations must embed UnimplementedMaMpfLectureServiceServer
 // for forward compatibility
 type MaMpfLectureServiceServer interface {
-	GetLecturesForUser(context.Context, *LecturesByUserRequest) (*LecturesQueryResult, error)
+	GetLecturesForUser(context.Context, *LecturesByUserAndTermRequest) (*LecturesQueryResult, error)
 	mustEmbedUnimplementedMaMpfLectureServiceServer()
 }
 
@@ -50,7 +50,7 @@ type MaMpfLectureServiceServer interface {
 type UnimplementedMaMpfLectureServiceServer struct {
 }
 
-func (UnimplementedMaMpfLectureServiceServer) GetLecturesForUser(context.Context, *LecturesByUserRequest) (*LecturesQueryResult, error) {
+func (UnimplementedMaMpfLectureServiceServer) GetLecturesForUser(context.Context, *LecturesByUserAndTermRequest) (*LecturesQueryResult, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetLecturesForUser not implemented")
 }
 func (UnimplementedMaMpfLectureServiceServer) mustEmbedUnimplementedMaMpfLectureServiceServer() {}
@@ -67,7 +67,7 @@ func RegisterMaMpfLectureServiceServer(s grpc.ServiceRegistrar, srv MaMpfLecture
 }
 
 func _MaMpfLectureService_GetLecturesForUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(LecturesByUserRequest)
+	in := new(LecturesByUserAndTermRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -79,7 +79,7 @@ func _MaMpfLectureService_GetLecturesForUser_Handler(srv interface{}, ctx contex
 		FullMethod: "/mampf.MaMpfLectureService/GetLecturesForUser",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MaMpfLectureServiceServer).GetLecturesForUser(ctx, req.(*LecturesByUserRequest))
+		return srv.(MaMpfLectureServiceServer).GetLecturesForUser(ctx, req.(*LecturesByUserAndTermRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }

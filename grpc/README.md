@@ -3,7 +3,7 @@
 ## Ruby command
 
 ```
-grpc_tools_ruby_protoc --ruby_out=../app/grpc/mampf --grpc_out=../app/grpc/mampf ./mampf.proto 
+grpc_tools_ruby_protoc --ruby_out=../app/rpc/mampf --grpc_out=../app/rpc/mampf ./mampf.proto 
 ```
 
 Use `require_relative`!

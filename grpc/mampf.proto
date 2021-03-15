@@ -41,6 +41,7 @@ string structure_ids = 19;
 bool comments_disabled = 20;
 bool organizational_on_top = 21;
 bool disable_teacher_display = 22;
+Course course = 23;
 //Following is part of external config.
 //int32 submission_max_team_size = 23;
 //int32 submission_grace_period = 23;
@@ -48,7 +49,7 @@ bool disable_teacher_display = 22;
 //simplified User model To be extended!
 message User {
     int32 id = 1;
-    int32 email = 2;
+    string email = 2;
     bool admin =3;
     string name = 4;
 }
@@ -64,11 +65,12 @@ message Term {
 message LecturesQueryResult{
     repeated Lecture lectures=1;
 }
-message LecturesByUserRequest {
+message LecturesByUserAndTermRequest {
     int32 user_id = 1;
+    int32 term_id = 2;
 }
 service MaMpfLectureService {
-    rpc GetLecturesForUser(LecturesByUserRequest) returns (LecturesQueryResult);
+    rpc GetLecturesForUser(LecturesByUserAndTermRequest) returns (LecturesQueryResult);
 }
 
 message TermRequest {

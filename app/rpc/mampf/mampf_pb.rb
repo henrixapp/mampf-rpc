@@ -41,10 +41,11 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :comments_disabled, :bool, 20
       optional :organizational_on_top, :bool, 21
       optional :disable_teacher_display, :bool, 22
+      optional :course, :message, 23, "mampf.Course"
     end
     add_message "mampf.User" do
       optional :id, :int32, 1
-      optional :email, :int32, 2
+      optional :email, :string, 2
       optional :admin, :bool, 3
       optional :name, :string, 4
     end
@@ -59,8 +60,9 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     add_message "mampf.LecturesQueryResult" do
       repeated :lectures, :message, 1, "mampf.Lecture"
     end
-    add_message "mampf.LecturesByUserRequest" do
+    add_message "mampf.LecturesByUserAndTermRequest" do
       optional :user_id, :int32, 1
+      optional :term_id, :int32, 2
     end
     add_message "mampf.TermRequest" do
       optional :term_id, :int32, 1
@@ -91,7 +93,7 @@ module Mampf
   User = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("mampf.User").msgclass
   Term = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("mampf.Term").msgclass
   LecturesQueryResult = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("mampf.LecturesQueryResult").msgclass
-  LecturesByUserRequest = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("mampf.LecturesByUserRequest").msgclass
+  LecturesByUserAndTermRequest = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("mampf.LecturesByUserAndTermRequest").msgclass
   TermRequest = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("mampf.TermRequest").msgclass
   TermsRequest = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("mampf.TermsRequest").msgclass
   TermsRequestResult = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("mampf.TermsRequestResult").msgclass
