@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_13_123754) do
+ActiveRecord::Schema.define(version: 2021_02_26_124230) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -346,6 +346,8 @@ ActiveRecord::Schema.define(version: 2020_12_13_123754) do
     t.integer "position"
     t.boolean "text_input", default: false
     t.float "boost", default: 0.0
+    t.datetime "released_at"
+    t.text "publisher"
     t.index ["quizzable_type", "quizzable_id"], name: "index_media_on_quizzable_type_and_quizzable_id"
     t.index ["teachable_type", "teachable_id"], name: "index_media_on_teachable_type_and_teachable_id"
   end
@@ -398,7 +400,7 @@ ActiveRecord::Schema.define(version: 2020_12_13_123754) do
     t.index ["subject_id"], name: "index_programs_on_subject_id"
   end
 
-  create_table "quiz_certificates", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "quiz_certificates", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.bigint "quiz_id", null: false
     t.bigint "user_id"
     t.text "code"
@@ -475,7 +477,7 @@ ActiveRecord::Schema.define(version: 2020_12_13_123754) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "submissions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "submissions", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.bigint "tutorial_id", null: false
     t.bigint "assignment_id", null: false
     t.text "token"

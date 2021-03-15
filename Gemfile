@@ -143,3 +143,7 @@ end
 group :test, :development, :docker_development do
   gem 'cypress-on-rails', '~> 1.0'
 end
+
+
+#For grpc dep
+gem 'gruf'

@@ -1,0 +1,108 @@
+syntax ="proto3";
+package mampf;
+
+option go_package = "github.com/henrixapp/mampf/grpc";
+import "google/protobuf/timestamp.proto";
+
+
+message Course {
+    int32 id=1;
+    string title=2;
+    google.protobuf.Timestamp created_at = 3;
+    google.protobuf.Timestamp updated_at = 4;
+    string short_title = 5;
+    bool organizational = 6;
+    string organizational_concept=7;
+    string locale = 8;
+    bool term_independent= 9;
+    string image_data = 10;
+}
+
+message Lecture {
+int32 id= 1;
+google.protobuf.Timestamp created_at = 2;
+google.protobuf.Timestamp updated_at = 3;
+int32 course_id = 4;
+int32 term_id = 5;
+int32 teacher_id = 6;
+int32 start_chapter = 7;
+bool absolute_numbering = 8;
+int32 start_section = 9;
+string organizational_concept = 10;
+bool organizational = 11;
+bool muesli = 12;
+string released = 13;
+string content_mode = 14;
+string passphrase = 15;
+string locale = 16;
+string sort = 17;
+int32 forum_id = 18;
+string structure_ids = 19;
+bool comments_disabled = 20;
+bool organizational_on_top = 21;
+bool disable_teacher_display = 22;
+//Following is part of external config.
+//int32 submission_max_team_size = 23;
+//int32 submission_grace_period = 23;
+}
+//simplified User model To be extended!
+message User {
+    int32 id = 1;
+    int32 email = 2;
+    bool admin =3;
+    string name = 4;
+}
+
+message Term {
+    int32 id = 1;
+    int32 year= 2;
+    string season=3;
+    google.protobuf.Timestamp created_at = 4;
+    google.protobuf.Timestamp updated_at = 5;
+    bool active = 6;
+}
+message LecturesQueryResult{
+    repeated Lecture lectures=1;
+}
+message LecturesByUserRequest {
+    int32 user_id = 1;
+}
+service MaMpfLectureService {
+    rpc GetLecturesForUser(LecturesByUserRequest) returns (LecturesQueryResult);
+}
+
+message TermRequest {
+    int32 term_id = 1;
+}
+
+message TermsRequest {
+    int32 user_id = 1;
+}
+
+message TermsRequestResult{
+    repeated Term terms = 1;
+}
+
+service  MaMpfTermService {
+    rpc GetTerm(TermRequest) returns (Term);
+    //returns all Terms for a User, in which they have lectures
+    rpc GetTerms(TermsRequest) returns (TermsRequestResult);
+}
+message LoginInformation {
+    string email=1;
+    string password=2;
+}
+
+message LoginResult {
+    bool success = 1;
+    User user=2;
+}
+
+message UserLookUp {
+    int32 id=1;
+}
+
+service MaMpfAuthService {
+    rpc Login(LoginInformation)  returns (LoginResult);
+    rpc LookUpUser(UserLookUp) returns (User);
+}
