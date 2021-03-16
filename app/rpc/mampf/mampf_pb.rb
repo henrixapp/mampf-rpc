@@ -37,7 +37,6 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :locale, :string, 16
       optional :sort, :string, 17
       optional :forum_id, :int32, 18
-      optional :structure_ids, :string, 19
       optional :comments_disabled, :bool, 20
       optional :organizational_on_top, :bool, 21
       optional :disable_teacher_display, :bool, 22
