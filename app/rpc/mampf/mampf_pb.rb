@@ -63,6 +63,15 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :user_id, :int32, 1
       optional :term_id, :int32, 2
     end
+    add_message "mampf.IsEditorRequest" do
+      optional :user, :int32, 1
+      optional :lecture, :int32, 2
+    end
+    add_message "mampf.IsEditorResponse" do
+      optional :isEditor, :bool, 1
+      optional :user, :int32, 2
+      optional :lecture, :int32, 3
+    end
     add_message "mampf.TermRequest" do
       optional :term_id, :int32, 1
     end
@@ -93,6 +102,8 @@ module Mampf
   Term = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("mampf.Term").msgclass
   LecturesQueryResult = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("mampf.LecturesQueryResult").msgclass
   LecturesByUserAndTermRequest = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("mampf.LecturesByUserAndTermRequest").msgclass
+  IsEditorRequest = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("mampf.IsEditorRequest").msgclass
+  IsEditorResponse = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("mampf.IsEditorResponse").msgclass
   TermRequest = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("mampf.TermRequest").msgclass
   TermsRequest = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("mampf.TermsRequest").msgclass
   TermsRequestResult = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("mampf.TermsRequestResult").msgclass

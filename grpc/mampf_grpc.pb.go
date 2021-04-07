@@ -19,6 +19,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type MaMpfLectureServiceClient interface {
 	GetLecturesForUser(ctx context.Context, in *LecturesByUserAndTermRequest, opts ...grpc.CallOption) (*LecturesQueryResult, error)
+	GetIsEditor(ctx context.Context, in *IsEditorRequest, opts ...grpc.CallOption) (*IsEditorResponse, error)
 }
 
 type maMpfLectureServiceClient struct {
@@ -38,11 +39,21 @@ func (c *maMpfLectureServiceClient) GetLecturesForUser(ctx context.Context, in *
 	return out, nil
 }
 
+func (c *maMpfLectureServiceClient) GetIsEditor(ctx context.Context, in *IsEditorRequest, opts ...grpc.CallOption) (*IsEditorResponse, error) {
+	out := new(IsEditorResponse)
+	err := c.cc.Invoke(ctx, "/mampf.MaMpfLectureService/GetIsEditor", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MaMpfLectureServiceServer is the server API for MaMpfLectureService service.
 // All implementations must embed UnimplementedMaMpfLectureServiceServer
 // for forward compatibility
 type MaMpfLectureServiceServer interface {
 	GetLecturesForUser(context.Context, *LecturesByUserAndTermRequest) (*LecturesQueryResult, error)
+	GetIsEditor(context.Context, *IsEditorRequest) (*IsEditorResponse, error)
 	mustEmbedUnimplementedMaMpfLectureServiceServer()
 }
 
@@ -52,6 +63,9 @@ type UnimplementedMaMpfLectureServiceServer struct {
 
 func (UnimplementedMaMpfLectureServiceServer) GetLecturesForUser(context.Context, *LecturesByUserAndTermRequest) (*LecturesQueryResult, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetLecturesForUser not implemented")
+}
+func (UnimplementedMaMpfLectureServiceServer) GetIsEditor(context.Context, *IsEditorRequest) (*IsEditorResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetIsEditor not implemented")
 }
 func (UnimplementedMaMpfLectureServiceServer) mustEmbedUnimplementedMaMpfLectureServiceServer() {}
 
@@ -84,6 +98,24 @@ func _MaMpfLectureService_GetLecturesForUser_Handler(srv interface{}, ctx contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _MaMpfLectureService_GetIsEditor_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(IsEditorRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MaMpfLectureServiceServer).GetIsEditor(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/mampf.MaMpfLectureService/GetIsEditor",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MaMpfLectureServiceServer).GetIsEditor(ctx, req.(*IsEditorRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // MaMpfLectureService_ServiceDesc is the grpc.ServiceDesc for MaMpfLectureService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -94,6 +126,10 @@ var MaMpfLectureService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetLecturesForUser",
 			Handler:    _MaMpfLectureService_GetLecturesForUser_Handler,
+		},
+		{
+			MethodName: "GetIsEditor",
+			Handler:    _MaMpfLectureService_GetIsEditor_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

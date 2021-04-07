@@ -15,6 +15,7 @@ module Mampf
       self.service_name = 'mampf.MaMpfLectureService'
 
       rpc :GetLecturesForUser, ::Mampf::LecturesByUserAndTermRequest, ::Mampf::LecturesQueryResult
+      rpc :GetIsEditor, ::Mampf::IsEditorRequest, ::Mampf::IsEditorResponse
     end
 
     Stub = Service.rpc_stub_class

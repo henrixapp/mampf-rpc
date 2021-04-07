@@ -2,7 +2,11 @@
 module Mampf
     class LecturesController < ::Gruf::Controllers::Base
       bind ::Mampf::MaMpfLectureService::Service
-  
+      def get_is_editor
+        l = ::Lecture.find(request.message.lecture)
+        u = ::User.find(request.message.user)
+        return ::Mampf::IsEditorResponse.new(isEditor: l.editors_with_inheritance.include?(u) || u.admin?,user:u.id, lecture:l.id)
+      end
       ##
       # @return [Demo::GetJobResp] The job response
       #
