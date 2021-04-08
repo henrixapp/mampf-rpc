@@ -7,6 +7,11 @@ module Mampf
         u = ::User.find(request.message.user)
         return ::Mampf::IsEditorResponse.new(isEditor: l.editors_with_inheritance.include?(u) || u.admin?,user:u.id, lecture:l.id)
       end
+      def get_is_participant_in_lecture
+        l = ::Lecture.find(request.message.lecture)
+        u = ::User.find(request.message.user)
+        return ::Mampf::IsParticipantResponse.new(isParticipant: u.lectures.include?(l) || u.admin?,user:u.id, lecture:l.id)
+      end
       ##
       # @return [Demo::GetJobResp] The job response
       #

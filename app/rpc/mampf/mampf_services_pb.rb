@@ -16,6 +16,7 @@ module Mampf
 
       rpc :GetLecturesForUser, ::Mampf::LecturesByUserAndTermRequest, ::Mampf::LecturesQueryResult
       rpc :GetIsEditor, ::Mampf::IsEditorRequest, ::Mampf::IsEditorResponse
+      rpc :GetIsParticipantInLecture, ::Mampf::IsParticipantRequest, ::Mampf::IsParticipantResponse
     end
 
     Stub = Service.rpc_stub_class

@@ -20,6 +20,7 @@ const _ = grpc.SupportPackageIsVersion7
 type MaMpfLectureServiceClient interface {
 	GetLecturesForUser(ctx context.Context, in *LecturesByUserAndTermRequest, opts ...grpc.CallOption) (*LecturesQueryResult, error)
 	GetIsEditor(ctx context.Context, in *IsEditorRequest, opts ...grpc.CallOption) (*IsEditorResponse, error)
+	GetIsParticipantInLecture(ctx context.Context, in *IsParticipantRequest, opts ...grpc.CallOption) (*IsParticipantResponse, error)
 }
 
 type maMpfLectureServiceClient struct {
@@ -48,12 +49,22 @@ func (c *maMpfLectureServiceClient) GetIsEditor(ctx context.Context, in *IsEdito
 	return out, nil
 }
 
+func (c *maMpfLectureServiceClient) GetIsParticipantInLecture(ctx context.Context, in *IsParticipantRequest, opts ...grpc.CallOption) (*IsParticipantResponse, error) {
+	out := new(IsParticipantResponse)
+	err := c.cc.Invoke(ctx, "/mampf.MaMpfLectureService/GetIsParticipantInLecture", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MaMpfLectureServiceServer is the server API for MaMpfLectureService service.
 // All implementations must embed UnimplementedMaMpfLectureServiceServer
 // for forward compatibility
 type MaMpfLectureServiceServer interface {
 	GetLecturesForUser(context.Context, *LecturesByUserAndTermRequest) (*LecturesQueryResult, error)
 	GetIsEditor(context.Context, *IsEditorRequest) (*IsEditorResponse, error)
+	GetIsParticipantInLecture(context.Context, *IsParticipantRequest) (*IsParticipantResponse, error)
 	mustEmbedUnimplementedMaMpfLectureServiceServer()
 }
 
@@ -66,6 +77,9 @@ func (UnimplementedMaMpfLectureServiceServer) GetLecturesForUser(context.Context
 }
 func (UnimplementedMaMpfLectureServiceServer) GetIsEditor(context.Context, *IsEditorRequest) (*IsEditorResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetIsEditor not implemented")
+}
+func (UnimplementedMaMpfLectureServiceServer) GetIsParticipantInLecture(context.Context, *IsParticipantRequest) (*IsParticipantResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetIsParticipantInLecture not implemented")
 }
 func (UnimplementedMaMpfLectureServiceServer) mustEmbedUnimplementedMaMpfLectureServiceServer() {}
 
@@ -116,6 +130,24 @@ func _MaMpfLectureService_GetIsEditor_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _MaMpfLectureService_GetIsParticipantInLecture_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(IsParticipantRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MaMpfLectureServiceServer).GetIsParticipantInLecture(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/mampf.MaMpfLectureService/GetIsParticipantInLecture",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MaMpfLectureServiceServer).GetIsParticipantInLecture(ctx, req.(*IsParticipantRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // MaMpfLectureService_ServiceDesc is the grpc.ServiceDesc for MaMpfLectureService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -130,6 +162,10 @@ var MaMpfLectureService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetIsEditor",
 			Handler:    _MaMpfLectureService_GetIsEditor_Handler,
+		},
+		{
+			MethodName: "GetIsParticipantInLecture",
+			Handler:    _MaMpfLectureService_GetIsParticipantInLecture_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

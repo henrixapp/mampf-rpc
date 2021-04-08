@@ -81,9 +81,20 @@ message IsEditorResponse {
     int32 lecture = 3;
 }
 
+message IsParticipantRequest {
+    int32 user=1;
+    int32 lecture=2;
+}
+
+message IsParticipantResponse {
+    bool isParticipant = 1;
+    int32 user=2;
+    int32 lecture = 3;
+}
 service MaMpfLectureService {
     rpc GetLecturesForUser(LecturesByUserAndTermRequest) returns (LecturesQueryResult);
     rpc GetIsEditor(IsEditorRequest) returns (IsEditorResponse);
+    rpc GetIsParticipantInLecture(IsParticipantRequest) returns (IsParticipantResponse);
 }
 
 message TermRequest {
