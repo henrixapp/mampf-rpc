@@ -2,3 +2,6 @@
 	path = pdfcomprezzor
 	url = https://github.com/henrixapp/pdfcomprezzor.git
 	branch = master
+[submodule "webdav-submission"]
+	path = webdav-submission
+	url = https://github.com/henrixapp/webdav-submission.git

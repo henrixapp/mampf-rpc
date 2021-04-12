@@ -149,6 +149,47 @@ services:
       - solr
       - redis
       - mailcatcher
+  webdav-submission:
+    build:
+       context: ./../../webdav-submission/server
+       dockerfile: Dockerfile
+    image: webdav-submission
+    restart: always
+    ports:
+      - "127.0.0.1:3003:3003"
+    environment:
+      DB_CONNECTION_TYPE: postgres
+      DB_CONNECTION_STRING: host=webdav-db port=5432 user=webdav dbname=webdav password=example sslmode=disable
+      MINIO_USER: mampfsecretpassword
+      MINIO_PASSWORD: mampfsecretpassword
+      MINIO_HOST: "minio:9000"
+      MAMPF_RPC: "mampf-rpc:9001"
+  webdav-db:
+    image: bitnami/postgresql:latest
+    restart: always
+    environment:
+      POSTGRESQL_PASSWORD: example
+      POSTGRESQL_USERNAME: webdav
+      POSTGRESQL_DATABASE: webdav
+      POSTGRES_HOST: 'webdav-db'
+    #volumes:  # PLEASE PERSIST YOUR DATA
+  minio:
+    image: minio/minio
+    command: server /data
+    ports:
+      - "127.0.0.1:9000:9000"
+    environment:
+      MINIO_ROOT_USER: mampfsecretpassword
+      MINIO_ROOT_PASSWORD: mampfsecretpassword
+    #volumes:  # PLEASE PERSIST YOUR DATA
+  proxy:
+    build:
+      context: ./../..
+      dockerfile: docker/development/Dockerfile.proxy
+    image: mampf-proxy
+    restart: always
+    ports:
+      - "127.0.0.1:3008:80"
   webpacker:
     build:
       context: ./../..
@@ -177,3 +218,4 @@ volumes:
   db-data:
   solr-data:
   sprockets-cache:
+  webdav-data:

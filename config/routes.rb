@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   mount Commontator::Engine => '/commontator'
 
   get 'search/index'
-
+  get "/auth", to: "auth#auth", defaults: { format: 'text' }
   get '/administration', to: 'administration#index',
                          as: 'administration'
   get '/administration/exit', to: 'administration#exit',
