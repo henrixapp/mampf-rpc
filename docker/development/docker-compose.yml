@@ -156,7 +156,7 @@ services:
     image: webdav-submission
     restart: always
     ports:
-      - "127.0.0.1:3003:3003"
+      - "127.0.0.1:3002:3002"
     environment:
       DB_CONNECTION_TYPE: postgres
       DB_CONNECTION_STRING: host=webdav-db port=5432 user=webdav dbname=webdav password=example sslmode=disable
