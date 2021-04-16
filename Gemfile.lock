@@ -452,6 +452,13 @@ GEM
     rb-gravatar (1.0.6)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
+    react_on_rails (12.2.0)
+      addressable
+      connection_pool
+      execjs (~> 2.5)
+      rails (>= 3.2)
+      rainbow (~> 3.0)
+      webpacker (>= 4.0)
     redis (4.2.5)
     regexp_parser (2.1.1)
     request_store (1.5.0)
@@ -694,6 +701,7 @@ DEPENDENCIES
   rails (~> 6.1)
   rails-erd
   rails-i18n
+  react_on_rails (= 12.2)
   responders
   rgl
   rqrcode
