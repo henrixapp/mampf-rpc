@@ -6,8 +6,8 @@ class SubmissionsController < ApplicationController
   before_action :set_lecture, only: :index
   before_action :set_too_late, only: [:edit, :update, :invite, :destroy, :leave]
   before_action :prevent_caching, only: :show_manuscript
-  before_action :check_if_tutorials, only: :index
-  before_action :check_if_assignments, only: :index
+  #before_action :check_if_tutorials, only: :index
+  #before_action :check_if_assignments, only: :index
   before_action :check_student_status, only: :index
   before_action :set_disposition, only: [:show_manuscript, :show_correction]
 

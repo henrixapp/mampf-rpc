@@ -152,6 +152,8 @@ Rails.application.routes.draw do
                                      as: 'lecture_open_comments'
   get 'lectures/:id/submissions', to: 'submissions#index',
                                   as: 'lecture_submissions'
+  get 'lectures/:id/submissions2', to: 'submissions2#index',
+                                  as: 'lecture_submissions2'
   get 'lectures/:id/tutorials', to: 'tutorials#index',
                                 as: 'lecture_tutorials'
   get 'lectures/:id/tutorial_overview', to: 'tutorials#overview',

@@ -22,15 +22,50 @@ import myLib from 'imports-loader?imports=default%20jquery%20$!./../../../node_m
 import {
     WidgetInstance
 } from "friendly-challenge";
+
+import React from 'react'
+import ReactDOM from 'react-dom'
+import store, { getQueries } from '../bundles/assignments/store/store';
+import { Provider } from 'react-redux';
+import { Provider as ReduxQueryProvider } from 'redux-query-react';
+import "react-datepicker/dist/react-datepicker.css";
+import LectureAssignmentsEditor from '../bundles/assignments/admin/LectureAssignmentsEditor';
+import LectureTutorialsEditor from '../bundles/assignments/admin/LectureTutorialsEditor'
+import SubmissionsOverview from "../bundles/assignments/students/SubmissionsOverview"
+// This is how react_on_rails can see the HelloWorld in the browser.
+
 var friendlyChallengeWidgetInstance = WidgetInstance
 require(["jquery-datetimepicker"], function (es) {
     $.datetimepicker.setLocale('de');
 })
 
-
 document.addEventListener("turbolinks:load", function () {
     // ...
-
+    const tutorialManagment = document.querySelector('#lecture-tutorials-manager')
+    if(tutorialManagment != null ){
+    var lectureID = parseInt(tutorialManagment.dataset.lecture);
+    ReactDOM.render(<React.StrictMode>
+        <Provider store={store}>
+    <ReduxQueryProvider queriesSelector={getQueries}>
+        <LectureTutorialsEditor lectureID={lectureID} /></ReduxQueryProvider></Provider></React.StrictMode>, tutorialManagment)
+    }
+    const lectureAssign = document.querySelector('#lecture-assignments-manager')
+    if(lectureAssign != null ){
+    var lectureID = parseInt(lectureAssign.dataset.lecture);
+    ReactDOM.render(<React.StrictMode>
+        <Provider store={store}>
+    <ReduxQueryProvider queriesSelector={getQueries}>
+        <LectureAssignmentsEditor lectureId={lectureID} /></ReduxQueryProvider></Provider></React.StrictMode>, lectureAssign)
+    }
+    const submissionsOverview = document.querySelector('#submissions-overview')
+    if(submissionsOverview != null ){
+    var lectureID = parseInt(submissionsOverview.dataset.lecture);
+    ReactDOM.render(<React.StrictMode>
+        <Provider store={store}>
+    <ReduxQueryProvider queriesSelector={getQueries}>
+        <SubmissionsOverview lectureID={lectureID} /></ReduxQueryProvider></Provider></React.StrictMode>, submissionsOverview)
+    }
+   
     var doneCallback, element, options, widget;
 
     doneCallback = function (solution) {
