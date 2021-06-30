@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_19_102604) do
+ActiveRecord::Schema.define(version: 2021_06_10_230901) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -348,6 +348,7 @@ ActiveRecord::Schema.define(version: 2021_03_19_102604) do
     t.float "boost", default: 0.0
     t.datetime "released_at"
     t.text "publisher"
+    t.datetime "file_last_edited"
     t.index ["quizzable_type", "quizzable_id"], name: "index_media_on_quizzable_type_and_quizzable_id"
     t.index ["teachable_type", "teachable_id"], name: "index_media_on_teachable_type_and_teachable_id"
   end

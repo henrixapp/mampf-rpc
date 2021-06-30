@@ -503,6 +503,7 @@ class Medium < ApplicationRecord
   end
 
   def manuscript_url_with_host
+    return manuscript_url(host: host) + "/"+manuscript_filename if ENV["REWRITE_ENABLED"]=="1"
     manuscript_url(host: host)
   end
 
@@ -576,8 +577,18 @@ class Medium < ApplicationRecord
     Medium.sort_localized_short[sort]
   end
 
+  def card_tooltip
+    return Medium.sort_localized[sort] unless sort == 'Nuesse' && file_last_edited
+    I18n.t('categories.exercises.singular_updated')
+  end
+
   def sort_localized
     Medium.sort_localized[sort]
+  end
+
+  def subheader_style
+    return 'badge badge-secondary' unless sort == 'Nuesse' && file_last_edited
+    'badge badge-danger'
   end
 
   def cache_key
